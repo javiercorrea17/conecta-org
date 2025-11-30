@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conecta ONG - Gestión de Impacto</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css?v=final">
+</head>
+
+<body>
+    <div id="app">
+        <nav class="navbar">
+            <div class="container nav-container">
+                <a href="#" class="logo" onclick="navigateTo('home')">
+                    <i class="fa-solid fa-hand-holding-heart"></i> Conecta ONG
+                </a>
+
+                <div class="nav-links">
+                    <div id="auth-links" class="hidden" style="display: flex; gap: 2rem; align-items: center;">
+                        <a href="#" id="nav-dashboard" onclick="navigateTo('dashboard')">Panel</a>
+                        <a href="#" id="nav-events" onclick="navigateTo('events')">Eventos</a>
+                        <a href="#" id="nav-volunteers" onclick="navigateTo('volunteers')">Voluntarios</a>
+
+                        <a href="#" onclick="logout(event)" style="color: var(--secondary); font-weight: 700;">
+                            <i class="fa-solid fa-right-from-bracket"></i> Salir
+                        </a>
+                    </div>
+
+                    <a href="#" onclick="showLoginModal()" id="login-btn" class="btn btn-primary">
+                        Iniciar Sesión
+                    </a>
+                </div>
+
+                <button class="mobile-menu-btn">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+
+        <main>
+            <section id="home-view" class="view">
+                <div class="hero">
+                    <div class="container hero-container">
+                        <div class="hero-content">
+                            <span class="badge">Gestión Inteligente</span>
+                            <h1>Impulsa tu <span class="gradient-text">Impacto Social</span></h1>
+                            <p>La plataforma todo en uno para conectar fundaciones, gestionar eventos y coordinar
+                                voluntarios de manera eficiente y sin complicaciones.</p>
+
+                            <div class="hero-actions">
+                                <button class="btn btn-primary" onclick="showLoginModal()">Comenzar Ahora</button>
+
+                                <button class="btn btn-outline"
+                                    onclick="document.getElementById('impact-stats').scrollIntoView({behavior: 'smooth'})">
+                                    Saber Más
+                                </button>
+                            </div>
+
+                            <div class="stats-row" id="impact-stats">
+                                <div class="stat-item">
+                                    <span class="stat-number">500+</span>
+                                    <span style="color:var(--text-muted)">ONGs</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">10k+</span>
+                                    <span style="color:var(--text-muted)">Voluntarios</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-number">2k+</span>
+                                    <span style="color:var(--text-muted)">Eventos</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="hero-visual">
+                            <div class="circle-gradient"></div>
+
+                            <div class="floating-card card-1">
+                                <i class="fa-solid fa-calendar-check"
+                                    style="color:var(--primary); font-size:1.5rem;"></i>
+                                <div>
+                                    <h4>Evento Exitoso</h4>
+                                    <p style="font-size:0.8rem; color:var(--text-muted)">Recaudación completada</p>
+                                </div>
+                            </div>
+
+                            <div class="floating-card card-2">
+                                <i class="fa-solid fa-users" style="color:var(--secondary); font-size:1.5rem;"></i>
+                                <div>
+                                    <h4>+50 Voluntarios</h4>
+                                    <p style="font-size:0.8rem; color:var(--text-muted)">Registrados hoy</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="dashboard-view" class="view hidden">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Panel de Control</h2>
+                        <button class="btn btn-primary" onclick="showCreateEventModal()">
+                            <i class="fa-solid fa-plus"></i> Crear Evento
+                        </button>
+                    </div>
+
+                    <div class="dashboard-stats">
+                        <div class="card">
+                            <i class="fa-solid fa-calendar-day"
+                                style="color: var(--primary); font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                            <h3>Eventos Activos</h3>
+                            <p class="stat-value" id="active-events-count" style="font-size: 2rem; font-weight: bold;">0
+                            </p>
+                        </div>
+                        <div class="card">
+                            <i class="fa-solid fa-users"
+                                style="color: var(--secondary); font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                            <h3>Voluntarios</h3>
+                            <p class="stat-value" id="total-volunteers-count"
+                                style="font-size: 2rem; font-weight: bold;">0</p>
+                        </div>
+                        <div class="card">
+                            <i class="fa-solid fa-clock"
+                                style="color: #f59e0b; font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
+                            <h3>Horas de Impacto</h3>
+                            <p class="stat-value" id="impact-hours" style="font-size: 2rem; font-weight: bold;">0</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="events-view" class="view hidden">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Gestión de Eventos</h2>
+                        <button class="btn btn-primary" onclick="showCreateEventModal()">Crear Evento</button>
+                    </div>
+                    <div class="events-grid" id="events-list"></div>
+                </div>
+            </section>
+
+            <section id="volunteers-view" class="view hidden">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Base de Voluntarios</h2>
+                        <button class="btn btn-primary" onclick="showCreateVolunteerModal()">
+                            <i class="fa-solid fa-user-plus"></i> Registrar Voluntario
+                        </button>
+                    </div>
+                    <div class="card table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Habilidades</th>
+                                    <th>Eventos Inscritos</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="volunteers-list"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="modal-container" class="modal-overlay hidden"></div>
+
+    <script src="app.js"></script>
+
+    <script>
+        setInterval(() => {
+            const state = JSON.parse(localStorage.getItem('conectaOngState'));
+            const loginBtn = document.getElementById('login-btn');
+            const authLinks = document.getElementById('auth-links');
+
+            if (state && state.currentUser) {
+                if (loginBtn) loginBtn.classList.add('hidden');
+                if (authLinks) {
+                    authLinks.classList.remove('hidden');
+                    authLinks.style.display = 'flex';
+                }
+            } else {
+                if (loginBtn) loginBtn.classList.remove('hidden');
+                if (authLinks) authLinks.classList.add('hidden');
+            }
+        }, 500);
+    </script>
+</body>
+
+</html>
